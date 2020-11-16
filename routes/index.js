@@ -6,5 +6,7 @@ var router = express.Router();
 router.get('/', productController.products);
 router.post('/', productController.create);
 
+router.get('/edit/:id', productController.edit);
+router.post('/edit/:id', productController.update);
 
 module.exports = router;
