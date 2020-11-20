@@ -40,6 +40,26 @@ const productController = {
         });
         fs.writeFileSync(__dirname + "/../database/products.json", JSON.stringify(productosNew,null,2));
         res.render ('edit', {productoEncontrado: editProduct}); 
+    },
+    delete: function (req,res,next){
+        let id = req.params.id;
+        let productoEncontrado; 
+        for(let i=0; i<productos.length; i++){
+            if (productos[i].id == id){
+                productoEncontrado = productos[i];
+                break;
+            }
+        } 
+        if (productoEncontrado){
+            let productoEliminado = productos.filter(function (productoEncontrado){
+                return productoEncontrado.id != id;
+            });
+            productoEliminadoJSON = JSON.stringify(productoEliminado);
+            fs.writeFileSync(__dirname + "/../database/products.json", productoEliminadoJSON);
+            res.send("Producto Eliminado");
+        } else {
+            res.render('productNotFound');
+        }
     }
 }
 
